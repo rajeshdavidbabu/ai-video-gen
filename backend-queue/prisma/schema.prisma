@@ -1,0 +1,173 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. Enums
+enum Role {
+  user
+  admin
+}
+
+enum GenerationStatus {
+  pending
+  processing
+  completed
+  failed
+}
+
+model User {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  image           String?
+  role            Role      @default(user)
+  accounts        Account[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // User value-objects
+  creditBalance   Int       @default(0) @map("credit_balance")
+  creditTransactions CreditTransaction[]
+  payments        Payment[]
+  videoGenerations UserVideoGeneration[]
+
+  @@map("user")
+}
+
+enum CreditTransactionStatus {
+  pending
+  used
+  refunded
+  cancelled
+  purchased
+}
+
+model CreditTransaction {
+  id            String    @id @default(cuid())
+  jobId         String   @unique @map("job_id")
+  amount        Int
+  status        CreditTransactionStatus 
+  description   String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  
+  // User relationship
+  userId        String    @map("user_id")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("credit_transactions")
+}
+ 
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@id([provider, providerAccountId])
+  @@map("account")
+}
+
+// 3. Video Generation related models
+model VideoGeneration {
+  id            String    @id @default(cuid())
+  jobId         String    @unique @map("job_id")
+  status        GenerationStatus @default(pending)
+  step          String?
+  statusMessage String?   @map("status_message")
+  formData      Json      @map("form_data")
+  creditsUsed   Int       @map("credits_used")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  assets        VideoAsset[]
+  users         UserVideoGeneration[]
+
+  @@map("video_generations")
+}
+
+model VideoAsset {
+  id                  String    @id @default(cuid())
+  generationId        String    @unique @map("generation_id")
+  renderS3Key         String?   @map("render_s3_key")
+  imageUrls           Json?     @map("image_urls") // String[]
+  audioUrl            String?   @map("audio_url")
+  captionsUrl         String?   @map("captions_url")
+  backgroundMusicUrl  String?   @map("background_music_url")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+  generation          VideoGeneration @relation(fields: [generationId], references: [id], onDelete: Cascade)
+  posterS3Key         String?   @map("poster_s3_key")
+  cloudFrontPosterUrl   String?   @map("cloudfront_poster_url")
+
+  @@map("video_assets")
+}
+
+model UserVideoGeneration {
+  id              String    @id @default(cuid())
+  userId          String
+  generationJobId String    @unique @map("generation_job_id")
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  generation      VideoGeneration @relation(fields: [generationJobId], references: [jobId], onDelete: Cascade)
+
+  @@map("user_video_generations")
+}
+
+// Payment model to track payment transactions
+model Payment {
+  id                  String    @id @default(cuid())
+  amount              Float     // Payment amount in currency
+  creditsAdded        Int       @map("credits_added") // Number of credits added
+  providerTransactionId String   @unique @map("provider_transaction_id") // Transaction ID from provider
+  metadata            Json?     // Additional payment metadata (can store currency, status, etc.)
+  createdAt           DateTime  @default(now()) @map("created_at")
+  
+  // User relationship
+  userId              String    @map("user_id")
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+// Track per-user download attempts
+model DownloadLog {
+  id        String   @id @default(cuid())
+  jobId     String
+  userId    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("download_logs")
+}
+
+// Track per-user rerender attempts
+model RerenderLog {
+  id        String   @id @default(cuid())
+  jobId     String
+  userId    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("rerender_logs")
+}
