@@ -7,6 +7,10 @@
 
 AI Shorts Pro is an open-source platform that transforms ideas or scripts into complete videos through AI-powered generation. The system creates scripts, adds professional voiceovers, and generates captivating visuals - all from a simple prompt.
 
+<div align="center">
+  <img src="frontend/public/logo/demo.gif" alt="AI Shorts Pro Demo" width="600">
+</div>
+
 ## 🚀 Features
 
 - **Script Generation**: Create engaging scripts from simple prompts or refine your own
