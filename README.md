@@ -1,7 +1,7 @@
 # AI Shorts Pro
 
 <div align="center">
-  <img src="frontend/public/logo.svg" alt="AI Shorts Pro Logo" width="150">
+  <img src="frontend/public/logo/logo.svg" alt="AI Shorts Pro Logo" width="150">
   <h3>Turn your scripts into engaging videos with AI</h3>
 </div>
 
