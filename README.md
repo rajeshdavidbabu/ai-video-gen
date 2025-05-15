@@ -83,9 +83,24 @@ Self-hosting instructions will be coming soon. The application is designed to be
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## 📄 Licensing
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+AI Shorts Pro is licensed under the MIT License with the Commons Clause. This means:
+
+✅ **Allowed:**
+
+*   Freely use AI Shorts Pro for personal projects, internal business operations, or academic research.
+*   Modify the source code to suit your needs.
+*   Distribute original or modified versions of the software, provided you include the original copyright and license notices (including the Commons Clause).
+*   Integrate AI Shorts Pro into larger products or services you offer, as long as the primary value of your product/service does not derive substantially from AI Shorts Pro's core functionality itself.
+
+❌ **Not Allowed:**
+
+*   Sell the AI Shorts Pro software directly as a product.
+*   Offer AI Shorts Pro as a standalone hosted Software-as-a-Service (SaaS) where the service's main offering is the functionality of AI Shorts Pro.
+*   Provide paid consulting or support services where the service's value is primarily AI Shorts Pro itself.
+
+Please see the `LICENSE` file in the root directory for the full license text and detailed terms.
 
 ---
 
