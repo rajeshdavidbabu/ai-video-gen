@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Generation } from "@/types/common";
 import Image from "next/image";
@@ -13,12 +13,43 @@ type VideoPlayerProps = {
 export function VideoPlayer({ generation }: VideoPlayerProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
+  const [posterUrl, setPosterUrl] = useState<string | null>(null);
+  const [isLoadingPosterUrl, setIsLoadingPosterUrl] = useState(false);
+  const [posterError, setPosterError] = useState(false);
 
-  // Determine CloudFront URL for poster only (playback disabled)
-  const cdnPosterUrl = generation.cloudFrontPosterUrl;
+  // Fetch the CloudFront URL for the poster
+  useEffect(() => {
+    const fetchPosterUrl = async () => {
+      if (!generation.jobId) return;
+      
+      setIsLoadingPosterUrl(true);
+      setPosterError(false);
+      
+      try {
+        const res = await fetch(`/api/assets/poster/${generation.jobId}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch poster URL');
+        }
+        
+        const data = await res.json();
+        if (data?.url) {
+          setPosterUrl(data.url);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (error) {
+        console.error('Error fetching poster URL:', error);
+        setPosterError(true);
+      } finally {
+        setIsLoadingPosterUrl(false);
+      }
+    };
+    
+    fetchPosterUrl();
+  }, [generation.jobId]);
 
   // Show spinner while loading poster
-  const showPosterSpinner = Boolean(cdnPosterUrl && !fadeIn);
+  const showPosterSpinner = isLoadingPosterUrl || (posterUrl && !fadeIn);
 
   // Handle image load complete with fade-in effect
   const handleImageLoaded = () => {
@@ -40,19 +71,34 @@ export function VideoPlayer({ generation }: VideoPlayerProps) {
           <Loader2 className="w-12 h-12 text-white animate-spin" />
         </div>
       )}
+      {/* Error state */}
+      {posterError && !isLoadingPosterUrl && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black/50 text-white text-center p-4">
+          <p>Failed to load image</p>
+          <button 
+            onClick={() => setPosterError(false)} 
+            className="mt-2 text-sm underline"
+          >
+            Try again
+          </button>
+        </div>
+      )}
       {/* Poster image only (playback disabled) */}
-      {cdnPosterUrl && (
+      {posterUrl && (
         <div className="relative w-full h-full">
           <div className={fadeClasses(fadeIn)}>
             <Image
-              src={cdnPosterUrl}
+              src={posterUrl}
               alt="Video thumbnail"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "cover" }}
               priority
               onLoadingComplete={handleImageLoaded}
-              onError={() => console.error("Failed to load poster image")}
+              onError={() => {
+                console.error("Failed to load poster image");
+                setPosterError(true);
+              }}
             />
           </div>
           {/* Centered custom download button */}

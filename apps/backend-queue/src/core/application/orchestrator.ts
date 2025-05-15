@@ -90,11 +90,6 @@ export const generateVideo = async (
       });
     }
 
-    // 8. Fetch and persist Cloudfront URLs
-    if (updatedVideo.assets?.renderS3Key && updatedVideo.assets.posterS3Key) {
-      updatedVideo = await services.videoProcessing.fetchAndPersistCloudfrontUrls(updatedVideo);
-    }
-
     // Mark as completed
     updatedVideo =
       await services.videoProcessing.markVideoAsCompleted(updatedVideo);
@@ -148,11 +143,6 @@ export const rerender = async (
       services.videoProcessing,
       services.render
     ));
-
-    // Could be better IMO
-    if (updatedVideo.assets?.renderS3Key && updatedVideo.assets.posterS3Key) {
-      updatedVideo = await services.videoProcessing.fetchAndPersistCloudfrontUrls(updatedVideo);
-    }
 
     // 5. Mark as completed and return
     updatedVideo =

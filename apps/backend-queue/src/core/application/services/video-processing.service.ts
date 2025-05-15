@@ -296,26 +296,4 @@ export class VideoProcessingService {
       files.map((file) => this.assetRepo.getPresignedUrl(`${jobId}/${file}`))
     );
   }
-
-  async fetchAndPersistCloudfrontUrls(video: VideoEntity): Promise<VideoEntity> {
-    if (!video.assets?.renderS3Key || !video.assets.posterS3Key) {
-      throw new Error('Missing S3 keys');
-    }
-    
-    const posterUrl = await this.assetRepo.getPosterUrl(video.assets.posterS3Key);
-    
-    const updatedAssets = {
-      ...video.assets,
-      cloudfrontPosterUrl: posterUrl,
-    };
-    const updatedVideo = video.addAssets(updatedAssets);
-
-    await this.updateAndPersistVideo(
-      updatedVideo,
-      "render",
-      "Cloudfront URLs fetched"
-    );
-
-    return updatedVideo;
-  }
 }

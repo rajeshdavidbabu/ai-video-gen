@@ -4,7 +4,7 @@ import { prisma } from "@/db/prisma";
 import { getSignedUrl as getCloudFrontSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { env } from "@/lib/env.server";
 
-const MAX_DOWNLOADS = 3;
+const MAX_DOWNLOADS = parseInt(env.MAX_DOWNLOADS) || 3;
 
 export async function GET(
   _req: Request,

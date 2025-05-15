@@ -20,6 +20,9 @@ const envSchema = zod.object({
   POLAR_WEBHOOK_SECRET: zod.string().min(1),
   PRODUCT_ID_STARTER_PACK: zod.string().min(1),
   PRODUCT_ID_VALUE_PACK: zod.string().min(1),
+
+  MAX_RERENDERS: zod.string().min(1),
+  MAX_DOWNLOADS: zod.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);

@@ -1,5 +1,5 @@
 {
-  "name": "plot",
+  "name": "backend-queue",
   "version": "1.0.0",
   "author": "dayblox",
   "description": "WebSocket chatrooms server",
@@ -7,10 +7,11 @@
     "node": ">=18.11"
   },
   "scripts": {
-    "dev": "tsx --require dotenv/config src/index.ts",
+    "dev": "prisma generate && tsx watch --require dotenv/config src/index.ts",
     "build": "esbuild index=./src --bundle --minify --outdir=dist --packages=external --platform=node",
     "start": "node dist",
-    "generate-schema": "ts-to-zod ./src/core/domain/types/core/video-formdata.types.ts ./src/core/services/generated/video-formdata.schema.ts"
+    "generate-schema": "ts-to-zod ./src/core/domain/types/core/video-formdata.types.ts ./src/core/services/generated/video-formdata.schema.ts",
+    "ready": "prisma generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.698.0",
