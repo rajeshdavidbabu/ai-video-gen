@@ -1,4 +1,4 @@
-# AI Shorts Pro
+# AI Shorts Pro (still under construction 🏗️🏗️)
 
 <div align="center">
   <img src="frontend/public/logo/logo.svg" alt="AI Shorts Pro Logo" width="150">
@@ -10,6 +10,11 @@ AI Shorts Pro is an open-source platform that transforms ideas or scripts into c
 <div align="center">
   <img src="frontend/public/logo/demo.gif" alt="AI Shorts Pro Demo" width="600">
 </div>
+
+## Architecture
+<img width="1113" alt="Screenshot 2025-05-12 at 11 57 50" src="https://github.com/user-attachments/assets/b99b4ce2-d42a-4033-b9d2-c964f10ae25c" />
+
+
 
 ## 🚀 Features
 
