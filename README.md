@@ -1,14 +1,14 @@
 # AI Shorts Pro (still under construction 🏗️🏗️)
 
 <div align="center">
-  <img src="frontend/public/logo/logo.svg" alt="AI Shorts Pro Logo" width="150">
+  <img src="apps/frontend/public/logo/logo.svg" alt="AI Shorts Pro Logo" width="150">
   <h3>Turn your scripts into engaging videos with AI</h3>
 </div>
 
 AI Shorts Pro is an open-source platform that transforms ideas or scripts into complete videos through AI-powered generation. The system creates scripts, adds professional voiceovers, and generates captivating visuals - all from a simple prompt.
 
 <div align="center">
-  <img src="frontend/public/logo/demo.gif" alt="AI Shorts Pro Demo" width="600">
+  <img src="apps/frontend/public/logo/demo.gif" alt="AI Shorts Pro Demo" width="600">
 </div>
 
 ## Architecture
