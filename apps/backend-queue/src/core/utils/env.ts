@@ -27,7 +27,6 @@ const envSchema = z.object({
   MIDJOURNEY_STYLE: z.string().optional().default("--style raw"),
 
   ELEVENLABS_API_KEY: z.string(),
-  DEEPGRAM_API_KEY: z.string(),
   S3_BUCKET_NAME: z.string(),
   S3_BUCKET_REGION: z.string(),
   AWS_ACCESS_KEY_ID: z.string(),
@@ -68,11 +67,7 @@ function getEnv(): Env {
       MIDJOURNEY_VERSION: process.env.MIDJOURNEY_VERSION,
       MIDJOURNEY_STYLE: process.env.MIDJOURNEY_STYLE,
       
-      // App Limits
-      MAX_RERENDERS: process.env.MAX_RERENDERS,
-      MAX_DOWNLOADS: process.env.MAX_DOWNLOADS,
       ELEVENLABS_API_KEY: process.env.ELEVENLABS_API_KEY,
-      DEEPGRAM_API_KEY: process.env.DEEPGRAM_API_KEY,
       S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
       S3_BUCKET_REGION: process.env.S3_BUCKET_REGION,
       AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
