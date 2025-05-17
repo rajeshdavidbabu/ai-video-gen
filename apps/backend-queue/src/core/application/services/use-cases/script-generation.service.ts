@@ -49,7 +49,6 @@ export class ScriptGenerationService {
     options: NonNullable<ScriptGenerationInput["options"]>
   ): Promise<string> {
     const userPrompt = this.contentGeneration.getScriptFromPrompt(prompt);
-    console.log("userPrompt ", userPrompt);
 
     return this.contentGeneration.generateText({
       messages: [
