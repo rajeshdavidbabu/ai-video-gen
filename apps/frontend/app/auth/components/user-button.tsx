@@ -55,7 +55,7 @@ export const UserButton = () => {
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem> */}
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator /> */}
         <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Logout</span>
