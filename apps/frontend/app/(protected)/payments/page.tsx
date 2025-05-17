@@ -73,6 +73,7 @@ function PaymentHistoryTable({ payments }: { payments: Payment[] }) {
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>ID</TableHead>
           <TableHead>Date</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Credits</TableHead>
@@ -82,6 +83,7 @@ function PaymentHistoryTable({ payments }: { payments: Payment[] }) {
       <TableBody>
         {payments.map((payment) => (
           <TableRow key={payment.id}>
+            <TableCell>{payment.id}</TableCell>
             <TableCell>
               {format(new Date(payment.createdAt), "MMM d, yyyy")}
             </TableCell>
