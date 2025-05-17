@@ -6,9 +6,15 @@ import { env } from "@/lib/env.server";
 
 const MAX_DOWNLOADS = parseInt(env.MAX_DOWNLOADS);
 
+type Props = {
+  params: Promise<{
+    jobId: string
+  }>
+}
+
 export async function GET(
   _req: Request,
-  { params }: { params: { jobId: string } }
+  { params }: Props
 ) {
   const session = await auth();
   const userId = session?.user?.id;

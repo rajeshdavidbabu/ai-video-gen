@@ -29,12 +29,16 @@ export async function GET() {
     });
 
     // Transform the response to include currency and status from metadata
-    const formattedPayments = payments.map(payment => ({
-      ...payment,
-      currency: payment.metadata?.currency || 'usd',
-      status: payment.metadata?.status || 'success',
-      provider: payment.metadata?.provider || 'stripe',
-    }));
+    const formattedPayments = payments.map(payment => {
+      const metadata = payment.metadata as Record<string, any> | null;
+      
+      return {
+        ...payment,
+        currency: metadata?.currency ?? 'usd',
+        status: metadata?.status ?? 'success',
+        provider: metadata?.provider ?? 'stripe',
+      };
+    });
 
     return Response.json(formattedPayments);
   } catch (error) {

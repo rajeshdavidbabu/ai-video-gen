@@ -3,9 +3,15 @@ import { NextResponse } from "next/server";
 import { cloudFrontAssetRepository } from "@/lib/cloudfront-assets";
 import { getRenderS3KeyByJobId } from "@/db/api/user-generation";
 
+type Props = {
+  params: Promise<{
+    jobId: string
+  }>
+}
+
 export async function GET(
   request: Request,
-  { params }: { params: { jobId: string } }
+  { params }: Props
 ) {
   try {
     const session = await auth();
@@ -15,7 +21,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { jobId } = params;
+    const { jobId } = await params;
     
     // Get the render S3 key from the database
     const renderS3Key = await getRenderS3KeyByJobId(jobId, userId);

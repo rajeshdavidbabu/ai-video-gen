@@ -3,9 +3,15 @@ import { NextResponse } from "next/server";
 import { cloudFrontAssetRepository } from "@/lib/cloudfront-assets";
 import { getPosterS3KeyByJobId } from "@/db/api/user-generation";
 
+type Props = {
+  params: Promise<{
+    jobId: string
+  }>
+}
+
 export async function GET(
   request: Request,
-  { params }: { params: { jobId: string } }
+  { params }: Props
 ) {
   try {
     const session = await auth();
