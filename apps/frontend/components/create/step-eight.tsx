@@ -84,8 +84,16 @@ export function StepEight() {
             <Button
               className="w-full text-md font-semibold font-sans"
               size="lg"
+              disabled={generateMutation.isPending}
             >
-              Generate Video ✨
+              {generateMutation.isPending ? (
+                <>
+                  Generating...
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                </>
+              ) : (
+                'Generate Video ✨'
+              )}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
