@@ -24,8 +24,6 @@ export class PromptGenerationService {
       message: "Generating image prompts from script..." 
     });
 
-    console.log("systemPrompt ", this.contentGeneration.getMidjourneySystemPrompt(numberOfImagePrompts, style));
-
     const response = await this.contentGeneration.generateStructuredOutput<{prompts: string[]}>({
       messages: [
         {
