@@ -32,16 +32,16 @@ export function StripeButton({ tierId, highlight }: { tierId: string, highlight?
   };
 
   // Polar.sh checkout links production
-  // const polarLinks = {
-  //   'starter-pack': 'https://buy.polar.sh/polar_cl_X63iLXA2Lu7cCRxAumMjnRqfKl1rT1XNQD9HY0GrEUH',
-  //   'value-pack': 'https://buy.polar.sh/polar_cl_1VdAO6BLxsn21dALigElzx5tl7QZL1YOJFzZv2vgxCf'
-  // };
+  const polarLinks = {
+    'starter-pack': 'https://buy.polar.sh/polar_cl_X63iLXA2Lu7cCRxAumMjnRqfKl1rT1XNQD9HY0GrEUH',
+    'value-pack': 'https://buy.polar.sh/polar_cl_1VdAO6BLxsn21dALigElzx5tl7QZL1YOJFzZv2vgxCf'
+  };
 
   // Polar.sh checkout links sandbox
-  const polarLinks = {
-    'value-pack': 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_VBOHHlJDD2WODCi9LQeSUpA4dlviES1HTyYF91Pz9vq/redirect',
-    'starter-pack': 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_Y08L331UzbVkZmSjSamYwoOjIEZCjDF3rvNC60f7Vwg/redirect'
-  };
+  // const polarLinks = {
+  //   'value-pack': 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_VBOHHlJDD2WODCi9LQeSUpA4dlviES1HTyYF91Pz9vq/redirect',
+  //   'starter-pack': 'https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_Y08L331UzbVkZmSjSamYwoOjIEZCjDF3rvNC60f7Vwg/redirect'
+  // };
 
   return (
     <Button
