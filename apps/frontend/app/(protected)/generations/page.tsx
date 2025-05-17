@@ -38,6 +38,16 @@ export default function GenerationsPage() {
           </p>
         </div>
 
+        {isLoading && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
+            <div className="col-span-full flex flex-col space-y-2 justify-center items-center">
+              <p className="text-muted-foreground font-sans">
+                Loading your generations...
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-8">
           {!isLoading && generations.length === 0 && (
             <div className="col-span-full flex flex-col space-y-2 justify-center items-center">
