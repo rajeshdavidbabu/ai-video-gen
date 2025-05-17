@@ -2,7 +2,7 @@ import { Queue, Worker, type Job } from 'bullmq';
 import type { JobQueue, JobOptions, JobProgress, JobProcessResult } from '../ports/job-queue.port';
 import type { VideoFormData, VideoOptions } from '../domain/types/core/video-formdata.types';
 import { env } from '../utils/env';
-import { VideoStatus } from '~/core/domain/types/core/video.types';
+import { VideoStatus } from '../domain/types/core/video.types';
 
 export class BullJobQueueAdapter implements JobQueue {
   private static readonly DEFAULT_OPTIONS: Required<JobOptions> = {

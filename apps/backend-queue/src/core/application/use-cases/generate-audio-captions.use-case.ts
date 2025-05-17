@@ -1,7 +1,7 @@
 import type { VideoEntity } from "../../domain/entities/video.entity";
 import type { VideoProcessingService } from "../services/video-processing.service";
 import type { AudioCaptionsGenerationService } from "../services/use-cases/audio-captions-generation.service";
-import { MUSIC_TO_FILE_MAP } from "~/core/domain/constants/mappings.constants";
+import { MUSIC_TO_FILE_MAP } from "../../domain/constants/mappings.constants";
 
 export const generateAudioCaptions = async (
   video: VideoEntity,
