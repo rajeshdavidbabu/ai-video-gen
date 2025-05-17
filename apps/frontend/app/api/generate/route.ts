@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     // 2) Call external service (Backend will create the VideoGeneration record)
     const response = await fetch(`${env.BACKEND_URL}/api/generate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.BACKEND_API_KEY}` },
       body: JSON.stringify({ jobId, videoData, ...(config && { config }) })
     });
     if (!response.ok) {

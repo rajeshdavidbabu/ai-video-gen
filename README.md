@@ -67,7 +67,7 @@ A Remotion-based video rendering service that:
 ## 🔧 Technology Stack
 
 - **Frontend**: Next.js, React, Tailwind CSS, TypeScript
-- **Backend**: Node.js, Express, TypeScript, Prisma
+- **Backend**: Node.js, Fastify, TypeScript, Prisma
 - **Database**: PostgreSQL
 - **Rendering**: Remotion (React-based video rendering)
 - **AI Services**: OpenAI API, Midjourney (via API), Elevenlabs

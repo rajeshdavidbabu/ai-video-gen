@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { jobId } = params;
+    const { jobId } = await params;
     
     // Get the poster S3 key from the database
     const posterS3Key = await getPosterS3KeyByJobId(jobId, userId);

@@ -8,6 +8,7 @@ const envSchema = zod.object({
   AUTH_GOOGLE_SECRET: zod.string().min(1),
   AUTH_SECRET: zod.string().min(1),
   BACKEND_URL: zod.string().min(1),
+  BACKEND_API_KEY: zod.string().min(1),
   
   // CloudFront configuration
   CLOUDFRONT_DOMAIN: zod.string().min(1),

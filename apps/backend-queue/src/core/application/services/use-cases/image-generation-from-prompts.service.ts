@@ -37,6 +37,7 @@ export class ImageGenerationFromPromptsService {
         totalPrompts: prompts.length,
         options,
         styleImage,
+        concurrency,
       });
 
       // Update imagesJson with new results
@@ -63,34 +64,36 @@ export class ImageGenerationFromPromptsService {
     totalPrompts: number;
     options: ImageGenerationOptions;
     styleImage?: string;
+    concurrency: number;
   }): Promise<Array<{ index: number; uri: string }>> {
-    const { batch, batchIndex, totalPrompts, options, styleImage } = params;
+    const { batch, batchIndex, totalPrompts, options, styleImage, concurrency } = params;
+    const startIndex = batchIndex * concurrency;
 
     const batchPromises = batch.map(async (prompt, index) => {
-      const imageIndex = batchIndex * batch.length + index;
-      const imageKey = `image${imageIndex + 1}`;
+      const globalIndex = startIndex + index;
+      const imageKey = `image${globalIndex + 1}`;
 
       if (this.imagesJson[imageKey]) {
-        return { index: imageIndex, uri: this.imagesJson[imageKey] };
+        return { index: globalIndex, uri: this.imagesJson[imageKey] };
       }
 
       const progress: ImageGenerationProgress = {
         step: "image",
-        message: `Generating image ${imageIndex + 1}/${totalPrompts}`,
+        message: `Generating image ${globalIndex + 1}/${totalPrompts}`,
       };
       await options.onProgress(progress.step, progress.message);
 
       const result = await this.imageGeneration.generateAndUpscale({
         prompt,
         styleImage,
-        imageIndex: imageIndex + 1,
+        imageIndex: globalIndex + 1,
         totalImages: totalPrompts,
         onProgress: async (progress) => {
           await options.onProgress(progress.step, progress.message);
         },
       });
 
-      return { index: imageIndex, uri: result.uri };
+      return { index: globalIndex, uri: result.uri };
     });
 
     return Promise.all(batchPromises);

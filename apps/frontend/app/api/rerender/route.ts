@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     // Forward the request to the backend service
     const response = await fetch(`${env.BACKEND_URL}/api/rerender`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.BACKEND_API_KEY}` },
       body: JSON.stringify({ jobId }),
     });
 

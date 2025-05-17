@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // Create new generation with reference to existing assets
     const response = await fetch(`${env.BACKEND_URL}/api/generate`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${env.BACKEND_API_KEY}` },
       body: JSON.stringify({
         videoData: generation.formData,
         config: {
