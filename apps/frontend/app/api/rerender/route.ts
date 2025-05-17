@@ -4,8 +4,7 @@ import { getGenerationForUser } from "@/db/api/user-generation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/db/prisma";
 
-// Use the environment variable or fallback to 3
-const MAX_RERENDERS = parseInt(env.MAX_RERENDERS) || 3;
+const MAX_RERENDERS = parseInt(env.MAX_RERENDERS);
 
 export async function POST(request: Request) {
   try {
