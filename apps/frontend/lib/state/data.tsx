@@ -108,13 +108,16 @@ export const voices: VoiceData[] = [
   },
 ];
 
-export const styles: StyleData[] = [
+export type Stability = 'stable' | 'recommended' | 'experimental';
+
+export const styles: (StyleData & { stability: Stability })[] = [
   {
     id: "realistic",
     name: "Ultra Realistic",
     description: "Photorealistic, detailed, natural",
     images: ["/styles/ultra-realistic.png"],
     value: "realistic",
+    stability: 'recommended',
   },
   {
     id: "illustrated",
@@ -122,6 +125,7 @@ export const styles: StyleData[] = [
     description: "Bold, graphic, contemporary",
     images: ["/styles/greg-rutkowski.png"],
     value: "illustrated",
+    stability: 'stable',
   },
   {
     id: "painterly",
@@ -129,6 +133,7 @@ export const styles: StyleData[] = [
     description: "Artistic, textured, atmospheric",
     images: ["/styles/tim-hildebrandt.png"],
     value: "painterly",
+    stability: 'stable',
   },
   {
     id: "anime",
@@ -136,6 +141,7 @@ export const styles: StyleData[] = [
     description: "Animated, ethereal, storytelling",
     images: ["/styles/studio-ghibli.png"],
     value: "anime",
+    stability: 'experimental',
   },
   {
     id: "detailed",
@@ -143,6 +149,7 @@ export const styles: StyleData[] = [
     description: "Rich, intricate, expressive",
     images: ["/styles/guy-delisle.png"],
     value: "detailed",
+    stability: 'experimental',
   },
   {
     id: "whimsical",
@@ -150,21 +157,22 @@ export const styles: StyleData[] = [
     description: "Fun, artistic, playful style",
     images: ["/styles/bob-staake-whimsical.png"],
     value: "whimsical",
+    stability: 'experimental',
   },
 ];
 
 export const fonts: FontData[] = [
   {
-    id: "dm-serif-display",
-    name: "Classic Serif",
-    description: "Elegant, traditional, refined",
-    preview: "/font-styles/dm-serif-display.png",
-  },
-  {
     id: "montserrat-extrabold",
     name: "Modern Sans",
     description: "Clean, contemporary, bold",
     preview: "/font-styles/montserrat-extrabold.png",
+  },
+  {
+    id: "rubik-bold",
+    name: "Geometric Modern",
+    description: "Friendly, geometric, balanced",
+    preview: "/font-styles/rubik-bold.png",
   },
   {
     id: "oswald",
@@ -185,10 +193,10 @@ export const fonts: FontData[] = [
     preview: "/font-styles/raleway-extrabold.png",
   },
   {
-    id: "rubik-bold",
-    name: "Geometric Modern",
-    description: "Friendly, geometric, balanced",
-    preview: "/font-styles/rubik-bold.png",
+    id: "dm-serif-display",
+    name: "Classic Serif",
+    description: "Elegant, traditional, refined",
+    preview: "/font-styles/dm-serif-display.png",
   },
 ];
 

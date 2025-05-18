@@ -5,7 +5,34 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Image from "next/image";
 import { useCreateVideo } from "@/lib/state/create-video-store";
 import type { VideoStyle } from "@/lib/state/create-video-schema";
-import { styles } from "@/lib/state/data";
+import { styles, type Stability } from "@/lib/state/data";
+import { cn } from "@/lib/utils";
+
+const StabilityBadge = ({ stability }: { stability: Stability }) => {
+  const config = {
+    stable: {
+      label: 'Mostly Stable',
+      className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    },
+    recommended: {
+      label: 'Recommended',
+      className: 'bg-blue-100 text-blue-800 border-blue-200',
+    },
+    experimental: {
+      label: 'Experimental',
+      className: 'bg-purple-100 text-purple-800 border-purple-200',
+    },
+  }[stability];
+
+  return (
+    <span className={cn(
+      'text-xs font-medium px-2 py-0.5 rounded-full border',
+      config.className
+    )}>
+      {config.label}
+    </span>
+  );
+};
 
 export function StepFour() {
   const { form, updateField } = useCreateVideo();
@@ -33,6 +60,9 @@ export function StepFour() {
                   className="block cursor-pointer"
                 >
                   <div className="relative aspect-[3/2] w-full">
+                    <div className="absolute top-2 right-2 z-10">
+                      <StabilityBadge stability={style.stability} />
+                    </div>
                     <Image
                       src={style.images[0]}
                       alt=""

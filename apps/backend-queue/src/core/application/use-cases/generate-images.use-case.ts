@@ -52,6 +52,18 @@ export const generateImages = async (
           });
         },
         onBatchComplete: async (imagesJson) => {
+          // Persist partial images after this batch
+          updatedVideo = updatedVideo.addAssets({
+            ...updatedVideo.assets,
+            imageUrls: Object.values(imagesJson),
+          });
+
+          await videoProcessing.updateAndPersistVideo(
+            updatedVideo,
+            "image",
+            `Saving images for current batch`
+          );
+
           await videoProcessing.saveAssetProgress({
             jobId: video.jobId,
             data: imagesJson,

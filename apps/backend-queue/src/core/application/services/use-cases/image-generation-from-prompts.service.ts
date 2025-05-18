@@ -27,26 +27,42 @@ export class ImageGenerationFromPromptsService {
         : {}),
     };
 
-    const batches = this.createBatches(prompts, concurrency);
-    const styleImage = Object.values(this.imagesJson)[0];
+    let styleImage = Object.values(this.imagesJson)[0];
+    const batches = this.createBatches(prompts, concurrency, Boolean(styleImage));
+
+    // Track number of prompts processed for correct indexing
+    let processedCount = 0;
 
     for (const [batchIndex, batch] of batches.entries()) {
+      const offset = processedCount;
+      const isFirstBatch = !styleImage && batchIndex === 0;
       const batchResults = await this.processBatch({
         batch,
         batchIndex,
         totalPrompts: prompts.length,
         options,
-        styleImage,
-        concurrency,
+        styleImage: isFirstBatch ? undefined : styleImage,
+        concurrency: batch.length,
+        offset,
       });
+
+      // After first batch, update style image if we didn't have one
+      if (isFirstBatch && batchResults[0]?.uri) {
+        console.log("First batch generated ", batchResults);
+        this.imagesJson[`image1`] = batchResults[0].uri;
+        styleImage = batchResults[0].uri;
+      }
 
       // Update imagesJson with new results
       batchResults.forEach(({ index, uri }) => {
         this.imagesJson[`image${index + 1}`] = uri;
       });
 
+      // Increment processed count
+      processedCount += batch.length;
+
       // Notify batch completion
-      await options.onBatchComplete(this.imagesJson);
+      await options.onBatchComplete(batchIndex, this.imagesJson);
 
       if (batchIndex < batches.length - 1) {
         await this.delay(delayBetweenBatches);
@@ -65,9 +81,10 @@ export class ImageGenerationFromPromptsService {
     options: ImageGenerationOptions;
     styleImage?: string;
     concurrency: number;
+    offset: number;
   }): Promise<Array<{ index: number; uri: string }>> {
-    const { batch, batchIndex, totalPrompts, options, styleImage, concurrency } = params;
-    const startIndex = batchIndex * concurrency;
+    const { batch, batchIndex, totalPrompts, options, styleImage, concurrency, offset } = params;
+    const startIndex = offset;
 
     const batchPromises = batch.map(async (prompt, index) => {
       const globalIndex = startIndex + index;
@@ -79,7 +96,7 @@ export class ImageGenerationFromPromptsService {
 
       const progress: ImageGenerationProgress = {
         step: "image",
-        message: `Generating image ${globalIndex + 1}/${totalPrompts}`,
+        message: `Batch ${batchIndex + 1} - images (Total images - ${globalIndex + 1}/${totalPrompts})`,
       };
       await options.onProgress(progress.step, progress.message);
 
@@ -99,11 +116,25 @@ export class ImageGenerationFromPromptsService {
     return Promise.all(batchPromises);
   }
 
-  private createBatches(prompts: string[], concurrency: number): string[][] {
-    return Array.from(
-      { length: Math.ceil(prompts.length / concurrency) },
-      (_, i) => prompts.slice(i * concurrency, (i + 1) * concurrency)
-    );
+  private createBatches(prompts: string[], concurrency: number, hasStyleImage: boolean) {
+    if (prompts.length === 0) return [];
+    
+    // If we already have a style image, use normal batching
+    if (hasStyleImage) {
+      return Array.from(
+        { length: Math.ceil(prompts.length / concurrency) },
+        (_, i) => prompts.slice(i * concurrency, (i + 1) * concurrency)
+      );
+    }
+    
+    // Otherwise, first batch is just the first prompt
+    return [
+      [prompts[0]],
+      ...Array.from(
+        { length: Math.ceil((prompts.length - 1) / concurrency) },
+        (_, i) => prompts.slice(i * concurrency + 1, (i + 1) * concurrency + 1)
+      ).filter(batch => batch.length > 0)
+    ];
   }
 
   private delay(ms: number): Promise<void> {

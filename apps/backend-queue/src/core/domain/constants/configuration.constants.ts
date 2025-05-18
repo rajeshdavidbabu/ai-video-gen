@@ -5,8 +5,8 @@ export const VALIDATION_LIMITS = {
 } as const;
 
 export const TIMEOUT_LIMITS = {
-  MIDJOURNEY_INITIAL_TIMEOUT: 5 * 60 * 1000, // 5 minutes
-  MIDJOURNEY_PROGRESS_TIMEOUT: 5 * 60 * 1000, // 5 minutes
+  MIDJOURNEY_INITIAL_TIMEOUT: 4 * 60 * 1000, // 4 minutes
+  MIDJOURNEY_PROGRESS_TIMEOUT: 2 * 60 * 1000, // 2 minutes
 } as const;
 
 export const CONCURRENCY_LIMITS = {
