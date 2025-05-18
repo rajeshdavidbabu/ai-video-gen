@@ -13,6 +13,7 @@ import {
   refreshAccessToken,
 } from "./db/api/account";
 import { prisma } from "@/db/prisma";
+import { env } from "@/lib/env.server";
 
 export const { handlers, auth, signOut } = NextAuth({
   pages: {
@@ -40,7 +41,26 @@ export const { handlers, auth, signOut } = NextAuth({
           throw new Error("User id is required");
         }
 
-        // Do something here when user is created
+        // Grant initial signup credits
+        const initialCreditLimit = parseInt(env.INITIAL_SIGNUP_CREDIT_USERS);
+        const userCount = await prisma.user.count();
+        if (userCount <= initialCreditLimit) {
+          // Increment user credit balance
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { creditBalance: { increment: 1 } },
+          });
+          // Record credit transaction
+          await prisma.creditTransaction.create({
+            data: {
+              userId: user.id,
+              amount: 1,
+              status: 'purchased',
+              description: 'Signup bonus credit',
+              jobId: `signup_${user.id}`,
+            },
+          });
+        }
       } catch (error) {
         console.error("Error occurred at createUser event", error);
       }

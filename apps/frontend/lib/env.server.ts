@@ -24,6 +24,7 @@ const envSchema = zod.object({
 
   MAX_RERENDERS: zod.string().min(1),
   MAX_DOWNLOADS: zod.string().min(1),
+  INITIAL_SIGNUP_CREDIT_USERS: zod.string().min(1),
 });
 
 export const env = envSchema.parse(process.env);

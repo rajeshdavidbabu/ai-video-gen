@@ -37,7 +37,9 @@ const envSchema = z.object({
   CLOUDFRONT_DOMAIN: z.string(),
   CLOUDFRONT_KEY_PAIR_ID: z.string(),
   CLOUDFRONT_PRIVATE_KEY: z.string(),
-  CLOUDFRONT_DISTRIBUTION_ID: z.string()
+  CLOUDFRONT_DISTRIBUTION_ID: z.string(),
+  // Initial signup credit user limit
+  INITIAL_SIGNUP_CREDIT_USERS: z.coerce.number().optional().default(100),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -79,6 +81,7 @@ function getEnv(): Env {
       CLOUDFRONT_KEY_PAIR_ID: process.env.CLOUDFRONT_KEY_PAIR_ID,
       CLOUDFRONT_PRIVATE_KEY: process.env.CLOUDFRONT_PRIVATE_KEY,
       CLOUDFRONT_DISTRIBUTION_ID: process.env.CLOUDFRONT_DISTRIBUTION_ID,
+      INITIAL_SIGNUP_CREDIT_USERS: process.env.INITIAL_SIGNUP_CREDIT_USERS,
     });
 
     return env;
