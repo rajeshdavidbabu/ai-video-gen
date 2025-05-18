@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { HeroImages } from "@/components/landing/hero-images";
 import { ArrowRight, MountainIcon, MousePointerClick } from "lucide-react";
 import { OpenSourceButton } from "@/components/ui/open-source-button";
@@ -17,6 +16,7 @@ import { FaqSection } from "@/components/landing/faq-section";
 import { LogoWithLink } from "@/components/landing/logo-with-link";
 import { Pricing } from "@/components/landing/pricing";
 import { Footer } from "@/components/landing/footer";
+import Image from "next/image";
 
 export default function LandingPage() {
   const [titleNumber, setTitleNumber] = useState(0);
@@ -100,9 +100,15 @@ export default function LandingPage() {
                         <ParticleButton
                           successDuration={1000}
                           variant="outline"
-                          className="w-full font-sans"
+                          className="w-full font-sans flex items-center justify-center gap-2"
                         >
-                          Learn More
+                          <Image
+                            src="/landing/web_neutral_rd_na.svg"
+                            alt="Google"
+                            width={20}
+                            height={20}
+                          />
+                          Join with Google
                         </ParticleButton>
                       </Link>
                     </div>

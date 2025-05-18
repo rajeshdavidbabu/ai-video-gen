@@ -15,7 +15,7 @@ export class ImageGenerationFromPromptsService {
     options: ImageGenerationOptions;
   }): Promise<string[]> {
     const { input, options } = params;
-    const { prompts, style, options: genOptions } = input;
+    const { prompts, options: genOptions } = input;
 
     const concurrency = genOptions?.concurrency ?? 1;
     const delayBetweenBatches = genOptions?.delayBetweenBatches ?? 1000;
@@ -62,7 +62,7 @@ export class ImageGenerationFromPromptsService {
       processedCount += batch.length;
 
       // Notify batch completion
-      await options.onBatchComplete(batchIndex, this.imagesJson);
+      await options.onBatchComplete(this.imagesJson);
 
       if (batchIndex < batches.length - 1) {
         await this.delay(delayBetweenBatches);

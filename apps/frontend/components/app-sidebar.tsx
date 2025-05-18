@@ -10,6 +10,7 @@ import {
   Sparkles,
   Coins,
   Receipt,
+  LifeBuoy,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -59,6 +60,11 @@ const items = [
     title: "Payments",
     url: "/payments",
     icon: Receipt,
+  },
+  {
+    title: "Support",
+    url: "/support",
+    icon: LifeBuoy,
   },
 ];
 
