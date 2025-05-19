@@ -26,6 +26,9 @@ export function PrivacyPolicy({
           <h2 className="text-xl font-semibold mt-8">1. Information We Collect</h2>
           <ul className="list-disc pl-6 mt-4">
             <li>
+              <span className="font-medium">Analytics Data:</span> Your name and email address collected for tracking user behavior and improving our services.
+            </li>
+            <li>
               <span className="font-medium">Account Information:</span> Email address, name, and payment details
             </li>
             <li>

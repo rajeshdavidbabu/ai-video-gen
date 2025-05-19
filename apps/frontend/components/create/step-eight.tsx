@@ -19,11 +19,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { VideoFormData } from "@/lib/state/create-video-schema";
+import { usePostHog } from "posthog-js/react";
 
 export function StepEight() {
   const router = useRouter();
   const { getValidatedFormData } = useCreateVideo();
   const { data: session } = useSession();
+  const posthog = usePostHog();
 
   const generateMutation = useMutation({
     mutationFn: async (formData: VideoFormData) => {
@@ -54,6 +56,8 @@ export function StepEight() {
   });
 
   const handleGenerate = () => {
+    // Capture event when user triggers video generation
+    posthog?.capture("video_generation_triggered", { user_id: session?.user?.id });
     const formData = getValidatedFormData();
     if (!session?.user?.id) return;
 

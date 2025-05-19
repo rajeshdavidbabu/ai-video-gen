@@ -137,6 +137,11 @@ export function TermsOfService({
           </h2>
           <ul className="list-disc pl-6 mt-4">
             <li>
+              <span className="font-medium">Analytics Tracking Data:</span> We
+              collect your name and email address to track usage patterns and
+              improve our services.
+            </li>
+            <li>
               We comply with international data protection standards and
               applicable privacy laws.
             </li>
