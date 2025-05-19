@@ -1,4 +1,4 @@
-# AI Shorts Pro (still under construction 🏗️🏗️)
+# AI Shorts Pro
 
 <div align="center">
   <img src="apps/frontend/public/logo/logo.svg" alt="AI Shorts Pro Logo" width="150">
