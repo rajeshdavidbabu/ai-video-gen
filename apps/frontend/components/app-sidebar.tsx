@@ -16,6 +16,8 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@/app/auth/components/user-button";
 import Image from "next/image";
+import { useCredits } from "@/hooks/use-credits";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import {
   Sidebar,
@@ -55,6 +57,7 @@ const items = [
     title: "Credits",
     url: "/credits",
     icon: Coins,
+    showCount: true,
   },
   {
     title: "Payments",
@@ -70,6 +73,7 @@ const items = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const credits = useCredits();
 
   // Custom hook to access sidebar context
   const sidebarContext = useSidebar();
@@ -112,8 +116,13 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <Link href={item.url}>
                         <item.icon className="w-4 h-4 text-primary" />
-                        <span className="font-sans font-semibold">
+                        <span className="font-sans font-semibold flex items-center justify-between w-full">
                           {item.title}
+                          {item.showCount && !credits.isLoading && (
+                            <span className="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-primary/10 text-primary">
+                              {credits?.data?.available || 0}
+                            </span>
+                          )}
                         </span>
                       </Link>
                     </SidebarMenuButton>

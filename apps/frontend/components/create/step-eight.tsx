@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { useCredits } from "@/hooks/use-credits";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,6 +28,8 @@ export function StepEight() {
   const { data: session } = useSession();
   const posthog = usePostHog();
 
+  const { invalidateCredits } = useCredits();
+
   const generateMutation = useMutation({
     mutationFn: async (formData: VideoFormData) => {
       const response = await fetch("/api/generate", {
@@ -42,7 +45,10 @@ export function StepEight() {
 
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
+      // Invalidate credits query to reflect the updated credit balance
+      await invalidateCredits();
+      
       toast.success("Video generation started", {
         description: "Your video is being generated. This may take a few minutes.",
       });
