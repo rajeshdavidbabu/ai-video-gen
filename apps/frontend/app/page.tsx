@@ -92,7 +92,7 @@ export default function LandingPage() {
                           variant="default"
                           className="w-full font-sans"
                         >
-                          Get Started
+                          Generate a free video
                           <ArrowRight className="h-4 w-4" />
                         </ParticleButton>
                       </Link>
