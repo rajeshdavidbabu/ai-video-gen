@@ -71,7 +71,7 @@ export const OverlaySchema = z
   .enum(["movie-grain", "sparkles", "none"])
   .default("none");
 
-export const TransitionSchema = z.enum(["fade", "none"]).default("none");
+export const TransitionSchema = z.enum(["fade", "none", "slide"]).default("none");
 
 export const ImageEffectSchema = z
   .enum([

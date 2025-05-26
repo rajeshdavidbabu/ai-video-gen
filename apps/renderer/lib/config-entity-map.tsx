@@ -19,6 +19,7 @@ import { DynamicZoom } from "../components/images/dynamic-zoom";
 import { Default } from "../components/images/default";
 import { HorizontalPan } from "../components/images/horizontal-pan";
 import type { FontSize } from "@/types";
+import { Slide } from "../components/video-transitions/slide";
 
 export const fontFamilyToUrlMap: Record<
   z.infer<typeof FontFamilySchema>,
@@ -51,6 +52,9 @@ export const transitionToComponentMap: Record<
 > = {
   fade: ({ children, sequenceDuration }) => (
     <Fade sequenceDuration={sequenceDuration}>{children}</Fade>
+  ),
+  slide: ({ children, sequenceDuration }) => (
+    <Slide sequenceDuration={sequenceDuration}>{children}</Slide>
   ),
   none: ({ children, sequenceDuration }) => (
     <DefaultTransition sequenceDuration={sequenceDuration}>

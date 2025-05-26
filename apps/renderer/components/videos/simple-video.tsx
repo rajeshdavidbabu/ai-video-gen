@@ -2,7 +2,6 @@ import {
   AbsoluteFill,
   useVideoConfig,
   Audio,
-  Video,
   continueRender,
   delayRender,
 } from "remotion";
@@ -22,7 +21,7 @@ import {
   imageEffectToComponentMap,
   overlayToComponentMap,
 } from "../../lib/config-entity-map";
-import { preloadAudio, preloadVideo } from "@remotion/preload";
+import { preloadAudio } from "@remotion/preload";
 
 export const SimpleVideo: React.FC<z.infer<typeof SimpleVideoSchema>> = ({
   imageUrls,
@@ -78,18 +77,18 @@ export const SimpleVideo: React.FC<z.infer<typeof SimpleVideoSchema>> = ({
   }, [fontFamily, fontLoadHandle]);
 
   useEffect(() => {
-    const loadVideo = async () => {
+    const loadAudio = async () => {
       try {
-        preloadVideo(narrationUrl);
+        preloadAudio(narrationUrl);
         setAudioLoaded(true);
         continueRender(audioLoadHandle);
       } catch (error) {
-        console.error("Error loading narration video:", error);
+        console.error("Error loading narration audio:", error);
         continueRender(audioLoadHandle);
       }
     };
 
-    loadVideo();
+    loadAudio();
   }, [narrationUrl, audioLoadHandle]);
 
   useEffect(() => {
@@ -138,7 +137,6 @@ export const SimpleVideo: React.FC<z.infer<typeof SimpleVideoSchema>> = ({
 
   return (
     <AbsoluteFill className="bg-black">
-      
       {transitionToComponentMap[transition]({
         sequenceDuration,
         children: loadedImages.map((image) =>
@@ -150,7 +148,7 @@ export const SimpleVideo: React.FC<z.infer<typeof SimpleVideoSchema>> = ({
         ),
       })}
       {overlayToComponentMap[overlay]}
-      
+      <Audio src={narrationUrl} />
       {backgroundMusicUrl && <BackgroundMusic src={backgroundMusicUrl} />}
       {captions && (
         <VideoCaptions
@@ -161,16 +159,6 @@ export const SimpleVideo: React.FC<z.infer<typeof SimpleVideoSchema>> = ({
           fontSize={fontSize}
         />
       )}
-      <Video
-        src={narrationUrl}
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: 300,
-          zIndex: 10,
-        }}
-      />
     </AbsoluteFill>
   );
 };

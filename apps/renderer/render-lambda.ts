@@ -51,6 +51,7 @@ async function main() {
     framesPerLambda: 40,
     privacy: "public",
     logLevel: "verbose",
+    concurrencyPerLambda: 1,
   });
 
   while (true) {

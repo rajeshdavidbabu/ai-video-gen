@@ -90,7 +90,7 @@ export const fontColorSchema = z.union([
   z.literal("coral"),
 ]);
 
-export const transitionSchema = z.union([z.literal("fade"), z.literal("none")]);
+export const transitionSchema = z.union([z.literal("fade"), z.literal("none"), z.literal("slide")]);
 
 export const captionAlignmentSchema = z.union([
   z.literal("top"),

@@ -21,12 +21,12 @@ const imageUrlsCDN = [
 export const RemotionRoot: React.FC = () => {
   const defaultProps = SimpleVideoSchema.parse({
     imageUrls: imageUrlsCDN,
-    backgroundMusicUrl: undefined,
-    narrationUrl: staticFile("talking/video.mp4"),
+    backgroundMusicUrl: staticFile("audio/bg-music.mp3"),
+    narrationUrl: staticFile("audio/narration.mp3"),
     captionsUrl: staticFile("audio/captions.json"),
     fontFamily: "oswald",
     fontColor: "sunset",
-    imageEffect: "horizontal-pan",
+    imageEffect: "zoom-and-shake",
     overlay: "sparkles",
     transition: "fade",
     captionAlignment: "center",
