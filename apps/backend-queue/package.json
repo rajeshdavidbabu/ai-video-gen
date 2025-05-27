@@ -21,7 +21,7 @@
     "@fastify/cors": "^10.0.1",
     "@hono/node-server": "^1.13.5",
     "@prisma/client": "^6.2.1",
-    "@remotion/lambda": "4.0.229",
+    "@remotion/lambda": "4.0.310",
     "@upstash/redis": "^1.34.3",
     "aws-sdk": "^2.1692.0",
     "bullmq": "^5.25.4",

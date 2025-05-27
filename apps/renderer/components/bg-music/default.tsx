@@ -15,6 +15,9 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
+  // Reduce the requested startVolume by 10%
+  const adjustedStartVolume = startVolume * 0.5;
+
   // Calculate the fade-out timing
   const fadeOutFrames = fadeOutDuration * fps;
   const fadeOutStart = durationInFrames - fadeOutFrames;
@@ -23,7 +26,7 @@ export const BackgroundMusic: React.FC<BackgroundMusicProps> = ({
   const volume = interpolate(
     frame,
     [0, fadeOutStart, durationInFrames],
-    [startVolume, startVolume, 0],
+    [adjustedStartVolume, adjustedStartVolume, 0],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",

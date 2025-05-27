@@ -30,6 +30,7 @@ export class RemotionVideoRenderAdapter implements VideoRenderService {
       maxRetries: 1,
       privacy: "private",
       logLevel: "verbose",
+      concurrencyPerLambda: 1,
     });
 
     if (!renderId) {
