@@ -46,11 +46,20 @@ const Subtitle: React.FC<SubtitleProps> = ({
     durationInFrames: 10,
   });
 
-  // Split text into array of words and their active states
+  // Split text into array of words and their active states with timing
   const wordsWithStates = text.split(" ").map((_, index) => {
     const wordTiming = words[index];
     const hasBeenRead = currentTimeMs >= wordTiming.startMs;
-    return { word: wordTiming.text, isActive: hasBeenRead };
+
+    // Calculate the frame when this word starts
+    const wordStartFrame = Math.floor((wordTiming.startMs / 1000) * fps) - startFrame;
+    const wordEndFrame = Math.floor((wordTiming.endMs / 1000) * fps) - startFrame;
+
+    return { 
+      word: wordTiming.text, 
+      startFrame: wordStartFrame,
+      endFrame: wordEndFrame,
+    };
   });
 
   // Overlay stroked text with normal text to create an effect where the stroke is outside

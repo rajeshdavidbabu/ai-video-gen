@@ -18,7 +18,7 @@ const convertCaptions = (data: Captions): Caption[] => {
 const combineTokens = (
   captions: Caption[],
   maxGapMs: number,
-  maxWords = 6
+  maxWords = 3
 ): CombinedToken[] => {
   const combinedTokens: CombinedToken[] = [];
   let currentToken: CombinedToken | null = null;
